@@ -1,0 +1,7 @@
+database:
+  connection-uri: ""
+  
+server:
+  name: "Aurealis"
+  ip: "www.builders.com"
+  color: "b"

@@ -1,0 +1,20 @@
+name: BuildersCore
+version: 0.1
+main: com.tehin.aurealis.builderscore.Core
+author: Tehin
+description: An Open Source builders core.
+commands:
+  create:
+    usage: ""  
+  goto:
+    usage: ""
+  setspawn:
+    usage: ""
+  setlobby:
+    usage: ""
+  visit:
+    usage: ""
+  invite:
+    usage: ""
+  spawn:
+    usage: ""

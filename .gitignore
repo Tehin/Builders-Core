@@ -1,4 +1,5 @@
 *target*
+*.idea*
 *.jar
 *.war
 *.ear
@@ -26,7 +27,9 @@ local.properties
 # Locally stored "Eclipse launch configurations"
 *.launch
 
-# Maven folder
+# Other folders
 /target
 /bin
 /.settings
+/.idea
+

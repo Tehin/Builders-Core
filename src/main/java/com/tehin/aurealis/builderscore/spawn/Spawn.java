@@ -27,6 +27,7 @@ public class Spawn {
 	public void create() {
 		Core.getInstance().getSpawnsManager().createSpawn(this);
 	}
+
 	// Getters
 	public Location getSpawn() {
 		return this.loc;

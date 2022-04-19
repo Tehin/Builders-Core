@@ -21,7 +21,6 @@ public class WorldListener implements Listener {
 		String worldName = e.getBlock().getLocation().getWorld().getName();
 		Project project = Core.getInstance().getProjectsManager().getProjectByName(worldName);
 		
-		System.out.println(player.hasPermission("builders.bypass"));
 		if (project == null || player.hasPermission("builders.bypass")) return;
 		
 		if (!project.getMembers().contains(uuid)) {

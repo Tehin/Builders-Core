@@ -1,40 +1,31 @@
 package com.tehin.aurealis.builderscore.commands.spawn;
 
+import com.tehin.aurealis.builderscore.commands.CoreCommand;
+import com.tehin.aurealis.builderscore.commands.spawn.sub.SetCmd;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.tehin.aurealis.builderscore.Core;
-import com.tehin.aurealis.builderscore.spawn.Spawn;
 import com.tehin.aurealis.builderscore.utils.Utils;
 
-public class SpawnCmd implements CommandExecutor {
+import java.util.Arrays;
+
+public class SpawnCmd extends CoreCommand {
+
+	public SpawnCmd(String name) {
+		super(name);
+	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		Player player = (Player) sender;
-		
-		if (args.length > 1) {
-			Utils.sendMessage(player, "&cUsage: /spawn or /spawn <spawn name>");
-			return false;
+	public boolean sendCmd(Player player, String cmd, String[] subCmdArgs) {
+		switch (cmd) {
+			case "set":
+				new SetCmd("builders.spawn.config", 1, "/spawn set <lobby>")
+						.exec(player, subCmdArgs);
+				break;
 		}
-		
-		if (args.length == 0) {
-			Core.getInstance().getSpawnsManager().getLobbySpawn().tp(player);;
-			return false;
-		}
-		
-		String name = args[0];
-		Spawn spawn = Core.getInstance().getSpawnsManager().getSpawn(name);
-		
-		if (spawn == null) {
-			Utils.sendMessage(player, "&cSpawn " + name + " does not exist.");
-			return false;
-		}
-		
-		spawn.tp(player);
-		
+
 		return false;
 	}
 

@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class Utils {
 	
@@ -29,15 +30,15 @@ public class Utils {
 		Bukkit.getServer().getConsoleSender().sendMessage(toColor(msg));
 	}
 	
-	public static void sendNoPermission(Player player) {
+	public static void sendNoPermission(@NotNull Player player) {
 		player.sendMessage(toColor("&cNo permission."));
 	}
 	
-	public static void sendMessage(Player player, String msg) {
+	public static void sendMessage(@NotNull Player player, String msg) {
 		player.sendMessage(toColor(msg));
 	}
 	
-	public static void sendMessageIfOnline(List<UUID> targets, String msg) {
+	public static void sendMessageIfOnline(@NotNull List<UUID> targets, String msg) {
 		for (UUID uuid : targets) {
 			Player online = Bukkit.getPlayer(uuid);
 			
@@ -47,18 +48,16 @@ public class Utils {
 	}
 	
 	/* Commands Utils */ 
-	public static boolean verifyCommand(CommandSender sender, String permission, String[] args, int length, String usage) {
-		if (!(sender instanceof Player)) return false;
-		
-		Player player = (Player) sender;
-		
-		if (permission != null && !player.hasPermission("builders.spawn.config")) {
-			Utils.sendNoPermission(player);
+	public static boolean verifyCommand(Player player, String permission, int argsLength, int commandLength, String usage) {
+		if (player == null) return false;
+
+		if (argsLength != commandLength) {
+			player.sendMessage(Utils.toColor("&cUsage: " + usage));
 			return false;
 		}
-		
-		if (args.length != length) {
-			player.sendMessage(Utils.toColor("&cUsage: " + usage));
+
+		if (permission != null && !player.hasPermission(permission)) {
+			Utils.sendNoPermission(player);
 			return false;
 		}
 		
@@ -66,8 +65,8 @@ public class Utils {
 	}
 	
 	/* Other Utils */
-	public static boolean isValid(String[] options, String value) {
-		return Arrays.toString(options).contains(value);
+	public static boolean isCmdValid(String[] options, String cmd) {
+		return Arrays.toString(options).contains(cmd);
 	}
 	
 	

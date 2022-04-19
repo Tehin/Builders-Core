@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.StreamSupport;
 
 import org.bson.Document;
 import org.bson.types.Binary;
@@ -27,6 +28,7 @@ public class ProjectsManager {
 	
 	// Projects names in the HashMap are saved as lower case, but we need the actual name.
 	public void saveProjects() {
+		Core.getInstance().getDB().getProjects().drop();
 		if (projects.size() == 0) {
 			Utils.sendConsole("[BuildersCore] &cThere are no projects to save.");
 			return;
@@ -46,15 +48,10 @@ public class ProjectsManager {
 	}
 	
 	public void loadProjects() {
-		Core.getInstance().getDB().getProjects().drop();
 		FindIterable<Document> documents = Core.getInstance().getDB().getProjects().find();
 		
-		int length = 0;
-		
-		for (@SuppressWarnings("unused") Document doc : documents) {
-			length++; 
-		}
-		
+		long length = StreamSupport.stream(documents.spliterator(), false).count();
+
 		if (length == 0) {
 			Utils.sendConsole("[BuildersCore] &cThere are no projects to load.");
 			return;
@@ -87,7 +84,7 @@ public class ProjectsManager {
 			
 		Location center = new Location(world, 0, 50, 0);
 		center.getBlock().setType(Material.BEDROCK);
-		
+
 		projects.put(project.getName().toLowerCase(), project);
 	}
 	

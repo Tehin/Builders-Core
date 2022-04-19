@@ -37,16 +37,16 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	private ArrayList<UUID> members;
 	
 	private String worldName;
-	private Location spawn;	
+	private Location spawn;
 	
 	private transient Scoreboard board;
-	
+
 	CustomWorldType worldType;
 	
 	public Project(UUID leader, String client, String name, Size size, String deadline, int priority, CustomWorldType worldType) {
 		this.name = name;
-		this.client = client;
 		this.worldName = name;
+		this.client = client;
 		this.size = size;
 		this.leader = leader;
 		this.deadline = deadline;
@@ -74,7 +74,7 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	}
 	
 	public void teleport(Player player, boolean bypass) {
-		if (!bypass && (!isMember(player) || this.closed)) { 
+		if ((!bypass && !isMember(player) || this.closed)) {
 			Utils.sendMessage(player, "&cYou are not member of this project or it's closed, please use /visit " + name);
 			return;
 		}
@@ -93,9 +93,9 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	}
 	
 	public void visit(Player player) {
-		player.setGameMode(GameMode.SPECTATOR);
 		player.teleport(getSpawn());
-		player.sendMessage(Utils.toColor("&aYou are currently visiting the project '" + name + "'"));
+		player.setGameMode(GameMode.SPECTATOR);
+		player.sendMessage(Utils.toColor("&aYou are currently visiting " + name + " project."));
 		
 		player.setScoreboard(getBoard());
 	}
@@ -104,14 +104,18 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	public boolean isMember(Player player) {
 		return members.contains(player.getUniqueId());
 	}
+
+	public boolean isMember(UUID playerUuid) {
+		return members.contains(playerUuid);
+	}
 	
-	public void inviteMember(UUID uuid) {
+	public void addPlayer(UUID uuid) {
 		if (members.size() == 6) return;
 		members.add(uuid);
 		updateBoard();
 	}
 	
-	public void removeMember(UUID uuid) {
+	public void removePlayer(UUID uuid) {
 		members.remove(uuid);
 		updateBoard();
 	}
@@ -188,7 +192,7 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	}
 
 	public World getWorld() {
-		return Bukkit.getServer().getWorld(worldName);
+		return Bukkit.getServer().getWorld(this.worldName);
 	}
 
 	public boolean isClosed() {
@@ -224,7 +228,7 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	public void setWorldName(String worldName) {
 		this.worldName = worldName;
 	}
-	
+
 	public String getDeadline() {
 		return this.deadline;
 	}

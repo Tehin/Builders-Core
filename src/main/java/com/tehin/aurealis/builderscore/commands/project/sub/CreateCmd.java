@@ -1,8 +1,6 @@
-package com.tehin.aurealis.builderscore.commands.project;
+package com.tehin.aurealis.builderscore.commands.project.sub;
 
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
+import com.tehin.aurealis.builderscore.commands.CoreSubCommand;
 import org.bukkit.entity.Player;
 
 import com.tehin.aurealis.builderscore.Core;
@@ -11,18 +9,14 @@ import com.tehin.aurealis.builderscore.project.size.Size;
 import com.tehin.aurealis.builderscore.project.type.CustomWorldType;
 import com.tehin.aurealis.builderscore.utils.Utils;
 
-public class CreateCmd implements CommandExecutor {
+public class CreateCmd extends CoreSubCommand {
 
-	// /create <name> <client name> <length> <width> <time limit>
-	// /create test 400 500 10/30 
-	@Override
-	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-		boolean valid = Utils.verifyCommand(sender, "builders.create", args, 7, 
-				"/create <project name> <client name> <length> <width> <time limit> <priority ? 1 to 100> <type ? FLAT or VOID>"
-		);
-		if (!valid) return false;
-		
-		Player player = (Player) sender;
+	public CreateCmd(String permission, int length, String usage) {
+		super(permission, length, usage);
+	}
+
+	public boolean exec(Player player, String[] args) {
+		if (!super.isValid(player, args)) return false;
 		
 		final String 
 		name = args[0],

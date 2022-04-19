@@ -1,16 +1,11 @@
 package com.tehin.aurealis.builderscore;
 
+import com.tehin.aurealis.builderscore.commands.project.*;
+import com.tehin.aurealis.builderscore.commands.spawn.SpawnCmd;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.tehin.aurealis.builderscore.commands.project.CreateCmd;
-import com.tehin.aurealis.builderscore.commands.project.GoToCmd;
-import com.tehin.aurealis.builderscore.commands.project.InviteCmd;
-import com.tehin.aurealis.builderscore.commands.project.VisitCmd;
-import com.tehin.aurealis.builderscore.commands.spawn.SetLobbyCmd;
-import com.tehin.aurealis.builderscore.commands.spawn.SetSpawnCmd;
-import com.tehin.aurealis.builderscore.commands.spawn.SpawnCmd;
 import com.tehin.aurealis.builderscore.database.MongoDB;
 import com.tehin.aurealis.builderscore.listeners.PlayerListener;
 import com.tehin.aurealis.builderscore.listeners.ProjectListener;
@@ -49,7 +44,7 @@ public class Core extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		//TODO: Save projects as a backup every certain time, (crashes doesnt call onDisable)
+		//TODO: Save projects as a backup every certain time, (crashes doesn't call onDisable)
 		getSpawnsManager().saveSpawns();
 		getProjectsManager().saveProjects();
 	}
@@ -58,15 +53,10 @@ public class Core extends JavaPlugin {
 	private void loadDatabase() {
 		this.mongodb.connect(getConfig().getString("database.connection-uri"));
 	}
-	
+
 	private void loadCommands() {
-		getCommand("create").setExecutor(new CreateCmd());
-		getCommand("goto").setExecutor(new GoToCmd());
-		getCommand("setspawn").setExecutor(new SetSpawnCmd());
-		getCommand("setlobby").setExecutor(new SetLobbyCmd());
-		getCommand("visit").setExecutor(new VisitCmd());
-		getCommand("invite").setExecutor(new InviteCmd());
-		getCommand("spawn").setExecutor(new SpawnCmd());
+		getCommand("project").setExecutor(new ProjectCmd("project"));
+		getCommand("spawn").setExecutor(new SpawnCmd("spawn"));
 	}
 	
 	private void loadConfigs() {

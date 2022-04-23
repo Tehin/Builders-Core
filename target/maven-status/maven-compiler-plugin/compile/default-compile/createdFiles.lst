@@ -10,6 +10,7 @@ com\tehin\aurealis\builderscore\events\ScoreboardUpdateEvent.class
 com\tehin\aurealis\builderscore\commands\project\sub\SetSpawnCmd.class
 com\tehin\aurealis\builderscore\commands\spawn\SpawnCmd.class
 com\tehin\aurealis\builderscore\listeners\ProjectListener.class
+com\tehin\aurealis\builderscore\commands\project\sub\HelpCmd.class
 com\tehin\aurealis\builderscore\listeners\WorldListener.class
 com\tehin\aurealis\builderscore\utils\Utils.class
 com\tehin\aurealis\builderscore\commands\project\sub\PlayerCmd.class

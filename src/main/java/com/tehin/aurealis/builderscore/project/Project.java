@@ -75,7 +75,7 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	
 	public void teleport(Player player, boolean bypass) {
 		if ((!bypass && !isMember(player) || this.closed)) {
-			Utils.sendMessage(player, "&cYou are not member of this project or it's closed, please use /visit " + name);
+			Utils.sendMessage(player, "&cYou are not member of this project or it's closed, please use /project visit " + name);
 			return;
 		}
 		
@@ -84,11 +84,11 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 		player.setScoreboard(getBoard());
 
 		if (bypass) {
-			Utils.sendMessage(player, "&aTeleporting to " + getName() + " with bypass.");
+			Utils.sendMessage(player, "&aTeleported to " + getName() + " with bypass.");
 			return;
 		}
 		
-		Utils.sendMessage(player, "&aTeleporting to " + getName() + "...");
+		Utils.sendMessage(player, "&aTeleported to " + getName() + "...");
 		
 	}
 	

@@ -7,8 +7,9 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 public class SetSpawnCmd extends CoreSubCommand {
-    public SetSpawnCmd(String permission, int length, String usage) {
-        super(permission, length, usage);
+
+    public SetSpawnCmd(String prefix, String description, String permission, int length, String usage) {
+        super(prefix, description, permission, length, usage);
     }
 
     public boolean exec(Player player, String[] args, Project project) {

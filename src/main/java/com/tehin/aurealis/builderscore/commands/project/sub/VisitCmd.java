@@ -9,14 +9,14 @@ import com.tehin.aurealis.builderscore.utils.Utils;
 
 public class VisitCmd extends CoreSubCommand {
 
-	public VisitCmd(String permission, int length, String usage) {
-		super(permission, length, usage);
+	public VisitCmd(String prefix, String description, String permission, int length, String usage) {
+		super(prefix, description, permission, length, usage);
 	}
 
-	public boolean exec(Player player, String[] args) {
+	public boolean exec(Player player, String[] args, Project project) {
 		if (!super.isValid(player, args)) return false;
 
-		Project project = Core.getInstance().getProjectsManager().getProjectByName(args[0]);
+		project = Core.getInstance().getProjectsManager().getProjectByName(args[0]);
 
 		if (project == null) {
 			Utils.sendMessage(player, "&cProject " + args[0] + " does not exist.");

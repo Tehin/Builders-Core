@@ -21,7 +21,7 @@ public class SpawnCmd extends CoreCommand {
 
 	@Override
 	public void registerSubCommands() {
-		registerSubCommand(new SetCmd("set", "Sets the selected spawn.","builders.spawn.config", 1, "/spawn set <lobby>"));
+		registerSubCommand(new SetCmd("set", "Sets the selected spawn.","builders.rol.admin", 1, "/spawn set <lobby>"));
 	}
 
 	@Override

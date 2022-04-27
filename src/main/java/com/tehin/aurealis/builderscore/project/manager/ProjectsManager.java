@@ -1,19 +1,12 @@
 package com.tehin.aurealis.builderscore.project.manager;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.StreamSupport;
 
+import com.tehin.aurealis.builderscore.scoreboard.score.CustomScore;
 import org.bson.Document;
 import org.bson.types.Binary;
-import org.bukkit.Difficulty;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
-import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 
 import com.mongodb.client.FindIterable;
@@ -23,7 +16,7 @@ import com.tehin.aurealis.builderscore.utils.Utils;
 
 public class ProjectsManager {
 	
-	public static HashMap<String, Project> projects = new HashMap<>();
+	private HashMap<String, Project> projects = new HashMap<>();
 	
 	
 	// Projects names in the HashMap are saved as lower case, but we need the actual name.
@@ -106,11 +99,17 @@ public class ProjectsManager {
 		return project != null;
 	}
 	
-	public ArrayList<Project> organizeByPriority() {
-		ArrayList<Project> sorted = new ArrayList<Project>(projects.values());
+	public List<Project> organizeByPriority(int limit) {
+		ArrayList<Project> sorted = new ArrayList<>(projects.values());
 		Collections.sort(sorted);
-		
-		return sorted;
+
+		final int size = sorted.size();
+
+		return sorted.subList(0, (limit > size) ? size : limit );
+	}
+
+	public int getSize() {
+		return projects.size();
 	}
 
 }

@@ -4,7 +4,7 @@ public class CustomScore {
 	
 	private String prefix, content;
 	private int position;
-	private boolean removePoints = false;
+	private boolean removeColons = false;
 	
 	public CustomScore(String prefix, String content, int position) {
 		this.prefix = prefix;
@@ -12,11 +12,11 @@ public class CustomScore {
 		this.position = position;
 	}
 	
-	public CustomScore(String prefix, String content, int position, boolean removePoints) {
+	public CustomScore(String prefix, String content, int position, boolean removeColons) {
 		this.prefix = prefix;
 		this.content = content;
 		this.position = position;
-		this.removePoints = removePoints;
+		this.removeColons = removeColons;
 	}
 
 	public String getPrefix() {
@@ -43,12 +43,12 @@ public class CustomScore {
 		this.position = position;
 	}
 
-	public boolean isRemovePoints() {
-		return removePoints;
+	public boolean isRemoveColons() {
+		return removeColons;
 	}
 
-	public void setRemovePoints(boolean removePoints) {
-		this.removePoints = removePoints;
+	public void setRemoveColons(boolean removeColons) {
+		this.removeColons = removeColons;
 	}
 
 }

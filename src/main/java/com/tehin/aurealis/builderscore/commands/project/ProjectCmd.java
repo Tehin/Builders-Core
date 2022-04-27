@@ -15,7 +15,7 @@ public class ProjectCmd extends CoreCommand {
 
     @Override
     public void registerSubCommands() {
-        registerSubCommand(new CreateCmd("create", "Creates a new project that can be visited by the customers", "builders.create", 7, "/project create <project name> <client name> <length> <width> <time limit> <priority ? 1 to 100> <type ? FLAT or VOID>"));
+        registerSubCommand(new CreateCmd("create", "Creates a new project that can be visited by the customers", "builders.rol.builder", 7, "/project create <project name> <client name> <length> <width> <deadline> <priority ? 1 to 100> <type ? FLAT or VOID>"));
         registerSubCommand(new GoCmd("go", "Teleports you to the selected project if you are a member of it", null, 1, "/project go <project name>"));
         registerSubCommand(new PlayerCmd("player", "Adds or removes a player from the current project", null, 2, "/project player <add | remove> <player>"));
         registerSubCommand(new VisitCmd("visit", "Teleports you as a spectator (customer) to see the build", null, 1, "/project visit <project name>"));
@@ -24,10 +24,10 @@ public class ProjectCmd extends CoreCommand {
     }
 
     public boolean sendCmd(Player player, String cmd, String[] subCmdArgs) {
-        boolean requiresProject = Utils.isCmdValid(new String[]{"chat", "removep", "addp"}, cmd); // Checks if the command requires a project
+        boolean requiresProject = Utils.isCmdValid(new String[]{"chat", "removep", "player"}, cmd); // Checks if the command requires a project
         Project project = Core.getInstance().getProjectsManager().getProjectByPlayerLoc(player); // If needed
 
-        if (requiresProject && project == null) {
+        if (requiresProject && !Core.getInstance().getProjectsManager().isAtProject(player)) {
             Utils.sendMessage(player, "&cYou are not in the world of a project, please teleport.");
             return false;
         }

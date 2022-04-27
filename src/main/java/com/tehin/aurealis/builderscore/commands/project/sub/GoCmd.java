@@ -24,7 +24,7 @@ public class GoCmd extends CoreSubCommand {
 			return false;
 		}
 		
-		if (player.hasPermission("builders.bypass")) {
+		if (player.hasPermission("builders.rol.admin")) {
 			project.teleport(player, true);
 			return true;
 		}

@@ -1,20 +1,29 @@
 package com.tehin.aurealis.builderscore.events;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import com.tehin.aurealis.builderscore.project.Project;
+import org.bukkit.scoreboard.Scoreboard;
+
+import java.util.List;
 
 public class ScoreboardUpdateEvent extends Event  {
 	
-	private Project project;
-	
-	public ScoreboardUpdateEvent(Project project) {
-		this.project = project;
+	private List<Player> players;
+	private Scoreboard updatedScoreboard;
+
+	public ScoreboardUpdateEvent(List<Player> players, Scoreboard updatedScoreboard) {
+		this.players = players;
+		this.updatedScoreboard = updatedScoreboard;
 	}
-	
-	public Project getProject() {
-		return this.project;
+
+	public Scoreboard getUpdatedScoreboard() {
+		return updatedScoreboard;
+	}
+	public List<Player> getPlayers() {
+		return this.players;
 	}
 
 	private static final HandlerList handlers = new HandlerList(); //This are the unimplemented methods.

@@ -6,14 +6,15 @@ import org.bukkit.event.Listener;
 import com.tehin.aurealis.builderscore.events.ScoreboardUpdateEvent;
 import com.tehin.aurealis.builderscore.project.Project;
 
-public class ProjectListener implements Listener {
+import java.util.Arrays;
+
+public class ScoreboardListener implements Listener {
 
 	@EventHandler 
 	public void onScoreboardUpdate(ScoreboardUpdateEvent e) {
-		Project project = e.getProject();
-		project.getOnlineMembers().forEach(p -> {
-			if (!p.getWorld().getName().equals(project.getName())) return;
-			p.setScoreboard(project.getBoard());
+		System.out.println(Arrays.toString(e.getPlayers().toArray()));
+		e.getPlayers().forEach(p -> {
+			p.setScoreboard(e.getUpdatedScoreboard());
 		});
 	}
 	

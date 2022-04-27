@@ -53,7 +53,7 @@ public abstract class CoreCommand implements CommandExecutor {
 
         if (args.length == 0) {
             if (command.getName().equalsIgnoreCase("spawn")) {
-                Core.getInstance().getSpawnsManager().getLobbySpawn().tp(player);
+                Core.getInstance().getSpawnsManager().sendToSpawn(player);
                 return true;
             }
             player.sendMessage(Utils.toColor("&cFor usage: /" + name + " help"));

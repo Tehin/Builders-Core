@@ -3,6 +3,7 @@ package com.tehin.aurealis.builderscore.spawn.manager;
 import java.util.HashMap;
 import java.util.Set;
 
+import com.tehin.aurealis.builderscore.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
@@ -10,6 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 import com.tehin.aurealis.builderscore.Core;
 import com.tehin.aurealis.builderscore.spawn.Spawn;
+import org.bukkit.entity.Player;
 
 public class SpawnsManager {
 	
@@ -40,6 +42,7 @@ public class SpawnsManager {
 		spawns.forEach((name, spawn) -> {
 			config.set("spawns." + name, spawn.getSpawn());
 		});
+
 		Core.getInstance().saveConfig();
 	}
 	
@@ -48,8 +51,19 @@ public class SpawnsManager {
 	}
 	
 	// Lobby
-	public Spawn getLobbySpawn() {
+	public Spawn getLobby() {
 		return spawns.getOrDefault("lobby", new Spawn("", null));
+	}
+
+	public void sendToSpawn(Player player) {
+		Spawn lobby = getLobby();
+		if (lobby == null) {
+			Utils.sendMessage(player, "&cThe lobby spawn has not been set.");
+			return;
+		}
+
+		Core.getInstance().getSpawnScoreboardManager().setUpForPlayer(player);
+		lobby.tp(player);
 	}
 	
 	public void setLobbySpawn(Spawn spawn) {

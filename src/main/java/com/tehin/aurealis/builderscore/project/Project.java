@@ -1,8 +1,10 @@
 package com.tehin.aurealis.builderscore.project;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
+import com.tehin.aurealis.builderscore.Core;
+import com.tehin.aurealis.builderscore.project.size.Size;
+import com.tehin.aurealis.builderscore.project.type.CustomWorldType;
+import com.tehin.aurealis.builderscore.serialization.CustomSerializable;
+import com.tehin.aurealis.builderscore.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -10,11 +12,8 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Scoreboard;
 
-import com.tehin.aurealis.builderscore.Core;
-import com.tehin.aurealis.builderscore.project.size.Size;
-import com.tehin.aurealis.builderscore.project.type.CustomWorldType;
-import com.tehin.aurealis.builderscore.serialization.CustomSerializable;
-import com.tehin.aurealis.builderscore.utils.Utils;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class Project extends CustomSerializable<Project> implements Comparable<Project> {
 	
@@ -31,7 +30,8 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	
 	private Size size;
 	private UUID leader;
-	private boolean closed = false; // If it's closed, only the leader can teleport and modify.
+	private boolean closed = false, // If it's closed, only the leader can teleport and modify.
+	changed = true;
 	int priority;
 	
 	private ArrayList<UUID> members;
@@ -56,7 +56,7 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 		this.members = new ArrayList<>();
 		members.add(leader);
 		
-		Core.getInstance().getCustomScoreboardManager().setBoard(this);
+		Core.getInstance().getProjectScoreboardManager().setUpScoreboard(this);
 	}
 	
 	// Methods
@@ -75,7 +75,7 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	
 	public void teleport(Player player, boolean bypass) {
 		if ((!bypass && !isMember(player) || this.closed)) {
-			Utils.sendMessage(player, "&cYou are not member of this project or it's closed, please use /visit " + name);
+			Utils.sendMessage(player, "&cYou are not member of this project or it's closed, please use /project visit " + name);
 			return;
 		}
 		
@@ -84,11 +84,11 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 		player.setScoreboard(getBoard());
 
 		if (bypass) {
-			Utils.sendMessage(player, "&aTeleporting to " + getName() + " with bypass.");
+			Utils.sendMessage(player, "&aTeleported to " + getName() + " with bypass.");
 			return;
 		}
 		
-		Utils.sendMessage(player, "&aTeleporting to " + getName() + "...");
+		Utils.sendMessage(player, "&aTeleported to " + getName() + "...");
 		
 	}
 	
@@ -129,6 +129,15 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	}
 	
 	// Setters & Getters
+	public boolean hasChanged() {
+		return this.changed;
+	}
+
+	//TODO: Verify if the project has changed, and if it has, modify it in the mongodb
+	public void setChanged(boolean changed) {
+		this.changed = changed;
+	}
+
 	public boolean isLeader(Player player) {
 		return player.getUniqueId().equals(this.leader);
 	}
@@ -142,7 +151,7 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 	}
 	
 	public void updateBoard() {
-		Core.getInstance().getCustomScoreboardManager().updateScoreboard(this);
+		Core.getInstance().getProjectScoreboardManager().updateScoreboard(this);
 	}
 	
 	public Location getSpawn() {
@@ -215,6 +224,15 @@ public class Project extends CustomSerializable<Project> implements Comparable<P
 		});
 		
 		return online;
+	}
+
+	public ArrayList<Player> getMembersAtProject() {
+		ArrayList<Player> atProject = new ArrayList<>();
+		getOnlineMembers().forEach((player) -> {
+			if (player.getLocation().getWorld().getName().equals(this.getName())) atProject.add(player);
+		});
+
+		return atProject;
 	}
 
 	public void setMembers(ArrayList<UUID> members) {

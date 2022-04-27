@@ -33,11 +33,16 @@ public class Utils {
 	public static void sendNoPermission(@NotNull Player player) {
 		player.sendMessage(toColor("&cNo permission."));
 	}
-	
+
 	public static void sendMessage(@NotNull Player player, String msg) {
 		player.sendMessage(toColor(msg));
 	}
-	
+	public static void sendMessage(@NotNull Player player, List<String> msg) {
+		msg.forEach(s -> {
+			player.sendMessage(toColor(s));
+		});
+	}
+
 	public static void sendMessageIfOnline(@NotNull List<UUID> targets, String msg) {
 		for (UUID uuid : targets) {
 			Player online = Bukkit.getPlayer(uuid);

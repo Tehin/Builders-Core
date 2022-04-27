@@ -9,8 +9,9 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 public class PlayerCmd extends CoreSubCommand {
-    public PlayerCmd(String permission, int length, String usage) {
-        super(permission, length, usage);
+
+    public PlayerCmd(String prefix, String description, String permission, int length, String usage) {
+        super(prefix, description, permission, length, usage);
     }
 
     public boolean exec(Player player, String[] args, Project project) {

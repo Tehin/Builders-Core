@@ -8,10 +8,11 @@ import com.tehin.aurealis.builderscore.utils.Utils;
 
 public class ChatCmd extends CoreSubCommand {
 
-	public ChatCmd(String permission, int length, String usage) {
-		super(permission, length, usage);
+	public ChatCmd(String prefix, String description, String permission, int length, String usage) {
+		super(prefix, description, permission, length, usage);
 	}
 
+	@Override
 	public boolean exec(Player player, String[] args, Project project) {
 		if (!super.isValid(player, args)) return false;
 		

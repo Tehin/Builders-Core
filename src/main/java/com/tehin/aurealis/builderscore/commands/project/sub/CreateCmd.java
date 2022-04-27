@@ -11,11 +11,13 @@ import com.tehin.aurealis.builderscore.utils.Utils;
 
 public class CreateCmd extends CoreSubCommand {
 
-	public CreateCmd(String permission, int length, String usage) {
-		super(permission, length, usage);
+
+	public CreateCmd(String prefix, String description, String permission, int length, String usage) {
+		super(prefix, description, permission, length, usage);
 	}
 
-	public boolean exec(Player player, String[] args) {
+	@Override
+	public boolean exec(Player player, String[] args, Project project) {
 		if (!super.isValid(player, args)) return false;
 		
 		final String 
@@ -47,7 +49,7 @@ public class CreateCmd extends CoreSubCommand {
 			Utils.sendMessage(player, "&cPlease use FLAT or VOID for the world type.");
 		}
 		
-		Project project = new Project(player.getUniqueId(), client, name, new Size(length, width), timeLimit, priority, worldType);
+		project = new Project(player.getUniqueId(), client, name, new Size(length, width), timeLimit, priority, worldType);
 		
 		try {			
 			project.create();
@@ -61,6 +63,4 @@ public class CreateCmd extends CoreSubCommand {
 		project.teleport(player, false);
 		return true;
 	}
-	
-
 }

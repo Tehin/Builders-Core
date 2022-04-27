@@ -9,21 +9,22 @@ import com.tehin.aurealis.builderscore.utils.Utils;
 
 public class GoCmd extends CoreSubCommand {
 
-	public GoCmd(String permission, int length, String usage) {
-		super(permission, length, usage);
+	public GoCmd(String prefix, String description, String permission, int length, String usage) {
+		super(prefix, description, permission, length, usage);
 	}
 
-	public boolean exec(Player player, String[] args) {
+	@Override
+	public boolean exec(Player player, String[] args, Project project) {
 		if (!super.isValid(player, args)) return false;
 
-		Project project = Core.getInstance().getProjectsManager().getProjectByName(args[0]);
+		project = Core.getInstance().getProjectsManager().getProjectByName(args[0]);
 		
 		if (project == null) {
 			Utils.sendMessage(player, "&cProject " + args[0] + " does not exist.");
 			return false;
 		}
 		
-		if (player.hasPermission("builders.bypass")) {
+		if (player.hasPermission("builders.rol.admin")) {
 			project.teleport(player, true);
 			return true;
 		}

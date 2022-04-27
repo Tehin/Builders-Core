@@ -13,7 +13,7 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		Core.getInstance().getSpawnsManager().getLobbySpawn().tp(e.getPlayer());
+		Core.getInstance().getSpawnsManager().sendToSpawn(e.getPlayer());
 	}
 	
 	@EventHandler

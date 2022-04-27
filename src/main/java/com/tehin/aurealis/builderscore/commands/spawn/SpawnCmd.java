@@ -1,7 +1,9 @@
 package com.tehin.aurealis.builderscore.commands.spawn;
 
+import com.tehin.aurealis.builderscore.Core;
 import com.tehin.aurealis.builderscore.commands.CoreCommand;
 import com.tehin.aurealis.builderscore.commands.spawn.sub.SetCmd;
+import com.tehin.aurealis.builderscore.project.Project;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -18,15 +20,14 @@ public class SpawnCmd extends CoreCommand {
 	}
 
 	@Override
-	public boolean sendCmd(Player player, String cmd, String[] subCmdArgs) {
-		switch (cmd) {
-			case "set":
-				new SetCmd("builders.spawn.config", 1, "/spawn set <lobby>")
-						.exec(player, subCmdArgs);
-				break;
-		}
+	public void registerSubCommands() {
+		registerSubCommand(new SetCmd("set", "Sets the selected spawn.","builders.rol.admin", 1, "/spawn set <lobby>"));
+	}
 
-		return false;
+	@Override
+	public boolean sendCmd(Player player, String cmd, String[] subCmdArgs) {
+		super.getSubCommand(cmd).exec(player, subCmdArgs, null);
+		return true;
 	}
 
 }

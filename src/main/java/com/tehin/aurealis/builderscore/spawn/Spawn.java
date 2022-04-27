@@ -6,12 +6,14 @@ import org.bukkit.entity.Player;
 
 import com.tehin.aurealis.builderscore.Core;
 import com.tehin.aurealis.builderscore.utils.Utils;
+import org.bukkit.scoreboard.Score;
+import org.bukkit.scoreboard.Scoreboard;
 
 public class Spawn {
 	
 	private String name;
 	private Location loc;
-	
+
 	public Spawn(String name, Location loc) {
 		this.name = name;
 		this.loc = loc;
@@ -32,7 +34,8 @@ public class Spawn {
 	public Location getSpawn() {
 		return this.loc;
 	}
-	
+
+
 	public String getSpawnName() {
 		return this.name;
 	}
@@ -45,4 +48,5 @@ public class Spawn {
 	public void setSpawn(Location loc) {
 		this.loc = loc;
 	}
+
 }
